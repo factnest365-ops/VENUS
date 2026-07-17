@@ -2,6 +2,7 @@ import initSqlJs, { type Database } from 'sql.js';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { type Memory, scoreMemory } from './confidence.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -172,4 +173,13 @@ export function getStats(): { events: number; patterns: number; rules: number } 
     patterns: patterns[0]?.values[0]?.[0] as number ?? 0,
     rules: rules[0]?.values[0]?.[0] as number ?? 0,
   };
+}
+
+/**
+ * Recall memories ranked by confidence score (highest first).
+ */
+export function recallMemories(memories: Memory[], limit = 20): Memory[] {
+  return [...memories]
+    .sort((a, b) => scoreMemory(b) - scoreMemory(a))
+    .slice(0, limit);
 }
