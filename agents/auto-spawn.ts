@@ -124,7 +124,13 @@ export function saveRegistry(registry: Registry): void {
 
 export function loadActive(): ActiveAgent[] {
   if (!fs.existsSync(ACTIVE_PATH)) return [];
-  return JSON.parse(fs.readFileSync(ACTIVE_PATH, "utf-8"));
+  const content = fs.readFileSync(ACTIVE_PATH, "utf-8").trim();
+  if (!content) return [];
+  try {
+    return JSON.parse(content);
+  } catch {
+    return [];
+  }
 }
 
 export function saveActive(active: ActiveAgent[]): void {
