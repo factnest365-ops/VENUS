@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "taskTypes": {
+    "code-gen": {
+      "label": "Code Generation",
+      "baseCredits": 0,
+      "description": "Generate code from specification"
+    },
+    "review": {
+      "label": "Code Review",
+      "baseCredits": 5,
+      "description": "Review code for quality and correctness"
+    },
+    "bugfix": {
+      "label": "Bug Fix",
+      "baseCredits": 100,
+      "description": "Diagnose and fix a bug"
+    },
+    "docs": {
+      "label": "Documentation",
+      "baseCredits": 0,
+      "description": "Write or update documentation"
+    }
+  }
+}
