@@ -46,7 +46,7 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 
 ---
 
-## Phase 4: Real Self-Improvement 🟡
+## Phase 4: Real Self-Improvement ✅
 
 **Actual learning and adaptation**
 
@@ -54,8 +54,8 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 - [x] `agents/auto-spawn.ts` — Real success tracking with decay
 - [x] Pattern detection (frequency-based)
 - [x] Evolution history tracking
-- [ ] Fix auto-spawn test timing issue
-- [ ] Integration tests
+- [x] Auto-spawn tests pass (timing issue resolved)
+- [x] 165 tests across 10 test files
 
 ---
 
@@ -71,13 +71,14 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 
 ---
 
-## Phase 6: Memory Evolution (Next)
+## Phase 6: Memory Evolution ✅
 
 **Second Brain that learns**
 
-- [ ] Confidence scoring on memories
-- [ ] Memory consolidation (merge similar)
-- [ ] Forgetting curve (prune old memories)
+- [x] `memory/confidence.ts` — Confidence scoring (recency + usage → 0-1)
+- [x] `memory/consolidate.ts` — Merge similar memories (Jaccard ≥ 0.5)
+- [x] `memory/forget.ts` — Prune memories below 0.3 confidence
+- [x] `memory/recall.ts` — Recall ranked by confidence
 - [ ] Cross-session memory linking
 - [ ] Memory-backed decision making
 
@@ -107,26 +108,27 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 
 ---
 
-## Phase 9: Revenue Operations
+## Phase 9: Revenue Operations 🟡
 
 **Real money-making**
 
-- [ ] Client intake system
-- [ ] Project scoping
+- [x] `money/intake.ts` — Client intake (Zod validated)
+- [x] `money/scoping.ts` — Project scoping with task templates
+- [x] `money/invoice.ts` — Invoice generation ($150/hr)
 - [ ] Time tracking
-- [ ] Invoice generation
 - [ ] Payment processing
 
 ---
 
-## Phase 10: Pi Integration
+## Phase 10: Pi Integration 🟡
 
 **Plug into the real Pi**
 
-- [ ] Pi SDK integration
+- [x] `pi/index.ts` — initVENUS() + getContext()
+- [x] Rules + patterns loaded from markdown on startup
+- [x] Memory DB initialization
 - [ ] CMUX automation
-- [ ] Memory persistence across sessions
-- [ ] Personality continuity
+- [ ] Personality continuity across sessions
 - [ ] Real-world task execution
 
 ---
@@ -147,7 +149,7 @@ Every interaction:
 
 | Metric | Target | Status |
 |--------|--------|--------|
-| Tests passing | 100% | 78/79 (99%) |
+| Tests passing | 100% | 165/165 (100%) |
 | Task types | 8+ | ✅ 8 |
 | Agent types | 5+ | ✅ 5 |
 | Memory entries | Growing | 🟡 |
@@ -163,4 +165,14 @@ VENUS isn't about being smart. It's about getting smarter.
 
 ---
 
-*Last updated: 2025-07-17*
+## Bonus: Open Source Ready ✅
+
+- [x] `README.md` — Badges, 1-min install, 3 examples, architecture diagram
+- [x] `CONTRIBUTING.md` — How to add skills/agents
+- [x] `LICENSE` — MIT
+- [x] `examples/basic-usage.ts`
+- [x] `examples/custom-agent.ts`
+
+---
+
+*Last updated: 2026-07-17*
