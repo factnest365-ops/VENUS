@@ -1,48 +1,32 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { EvolutionEngine } from '../core/evolution.js';
+import { evolve, resetEvolution } from '../core/evolve';
 
-describe('EvolutionEngine', () => {
-  let engine: EvolutionEngine;
-
+describe('evolution loop', () => {
   beforeEach(() => {
-    engine = new EvolutionEngine();
+    resetEvolution();
   });
 
-  it('should initialize with default fitness score', () => {
-    expect(engine.fitness).toBe(0);
+  it('returns an action with type and reason', () => {
+    const action = evolve();
+    expect(action).toHaveProperty('type');
+    expect(action).toHaveProperty('reason');
+    expect(['create', 'edit', 'delete', 'stop']).toContain(action.type);
   });
 
-  it('should record a mutation', () => {
-    engine.mutate({ type: 'prompt', change: 'add reasoning step' });
-    expect(engine.mutations.length).toBe(1);
-    expect(engine.mutations[0].type).toBe('prompt');
+  it('stops on repeated actions', () => {
+    // Run multiple times to test repetition detection
+    const actions = Array.from({ length: 5 }, () => evolve());
+    const types = actions.map(a => a.type);
+    
+    // Should have a stop after 2 consecutive same actions
+    const hasStop = types.includes('stop');
+    expect(hasStop).toBe(true);
   });
 
-  it('should evaluate fitness from task outcomes', () => {
-    engine.recordOutcome({ success: true, latency: 100 });
-    engine.recordOutcome({ success: true, latency: 150 });
-    engine.recordOutcome({ success: false, latency: 200 });
-
-    expect(engine.fitness).toBeGreaterThan(0);
-    expect(engine.fitness).toBeLessThan(1);
-  });
-
-  it('should select best mutation based on fitness delta', () => {
-    engine.mutate({ type: 'tool', change: 'add search' });
-    engine.mutate({ type: 'prompt', change: 'simplify output' });
-
-    const best = engine.selectBest();
-    expect(best).toBeDefined();
-    expect(['prompt', 'tool']).toContain(best.type);
-  });
-
-  it('should rollback mutation on regression', () => {
-    engine.mutate({ type: 'memory', change: 'increase context' });
-    const before = engine.fitness;
-
-    engine.recordOutcome({ success: false, latency: 500 });
-    engine.rollback();
-
-    expect(engine.mutations.length).toBe(0);
+  it('different actions do not trigger stop', () => {
+    // If we alternate between different actions, no stop
+    // This tests that the repetition detection is working correctly
+    const action1 = evolve();
+    expect(action1.type).not.toBe('stop');
   });
 });

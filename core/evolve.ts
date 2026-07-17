@@ -15,6 +15,11 @@ const read = (f: string) => readFileSync(join(CORE, f), "utf-8");
 let lastAction = "";
 let repeatCount = 0;
 
+export function resetEvolution(): void {
+  lastAction = "";
+  repeatCount = 0;
+}
+
 export function evolve(): Action {
   const rules = read("rules.md").toLowerCase();
   const patterns = read("patterns.md");
@@ -36,8 +41,8 @@ export function evolve(): Action {
   const currentAction = rules.includes("prune") ? "delete-prune" : "default";
   if (currentAction === lastAction) {
     repeatCount++;
-    if (repeatCount > 2) {
-      return { type: "stop", reason: "Same action repeated 3+ times. Halting to prevent loop." };
+    if (repeatCount >= 2) {
+      return { type: "stop", reason: "Same action repeated 2+ times. Halting to prevent loop." };
     }
   } else {
     lastAction = currentAction;

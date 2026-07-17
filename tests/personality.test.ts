@@ -1,65 +1,52 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { Personality } from '../personality/core.js';
+import { describe, it, expect } from 'vitest';
+import { getVoice, shouldJoke, getVoicePrefix } from '../personality/voice';
+import { greet, farewell, getJoke } from '../personality/index';
 
-describe('Personality', () => {
-  let personality: Personality;
+describe('personality system', () => {
+  describe('voice', () => {
+    it('returns serious tone for errors', () => {
+      const voice = getVoice({ event: 'error' });
+      expect(voice.tone).toBe('serious');
+      expect(voice.humor).toBe('none');
+    });
 
-  beforeEach(() => {
-    personality = new Personality();
+    it('returns playful tone for idle', () => {
+      const voice = getVoice({ event: 'idle' });
+      expect(voice.tone).toBe('playful');
+      expect(voice.humor).toBe('full');
+    });
+
+    it('returns cold style for critical errors', () => {
+      const voice = getVoice({ event: 'error', severity: 'critical' });
+      expect(voice.style).toBe('cold');
+    });
+
+    it('shouldJoke returns false for errors', () => {
+      expect(shouldJoke({ event: 'error' })).toBe(false);
+    });
+
+    it('shouldJoke returns true for idle', () => {
+      expect(shouldJoke({ event: 'idle' })).toBe(true);
+    });
   });
 
-  it('should have default traits', () => {
-    const traits = personality.getTraits();
-    expect(traits).toHaveProperty('curiosity');
-    expect(traits).toHaveProperty('caution');
-    expect(traits).toHaveProperty('creativity');
-  });
+  describe('greetings', () => {
+    it('returns a string greeting', () => {
+      const result = greet();
+      expect(typeof result).toBe('string');
+      expect(result.length).toBeGreaterThan(0);
+    });
 
-  it('should adjust traits based on feedback', () => {
-    const before = personality.getTrait('curiosity');
-    personality.adjustTrait('curiosity', 0.1);
-    const after = personality.getTrait('curiosity');
-    expect(after).toBeGreaterThan(before);
-  });
+    it('returns a string farewell', () => {
+      const result = farewell();
+      expect(typeof result).toBe('string');
+      expect(result.length).toBeGreaterThan(0);
+    });
 
-  it('should clamp traits between 0 and 1', () => {
-    personality.adjustTrait('caution', 10);
-    expect(personality.getTrait('caution')).toBe(1);
-
-    personality.adjustTrait('caution', -10);
-    expect(personality.getTrait('caution')).toBe(0);
-  });
-
-  it('should generate system prompt incorporating traits', () => {
-    const prompt = personality.toSystemPrompt();
-    expect(typeof prompt).toBe('string');
-    expect(prompt.length).toBeGreaterThan(10);
-  });
-
-  it('should evolve personality over time', () => {
-    const initial = { ...personality.getTraits() };
-    
-    // Simulate many interactions
-    for (let i = 0; i < 100; i++) {
-      personality.recordInteraction({
-        outcome: Math.random() > 0.5 ? 'success' : 'failure',
-        complexity: Math.random(),
-      });
-    }
-
-    const evolved = personality.getTraits();
-    // At least one trait should have changed
-    const changed = Object.keys(initial).some(
-      (key) => initial[key] !== evolved[key]
-    );
-    expect(changed).toBe(true);
-  });
-
-  it('should serialize and deserialize', () => {
-    personality.adjustTrait('creativity', 0.8);
-    const json = personality.toJSON();
-    const restored = Personality.fromJSON(json);
-
-    expect(restored.getTrait('creativity')).toBe(0.8);
+    it('returns a joke', () => {
+      const result = getJoke();
+      expect(typeof result).toBe('string');
+      expect(result!.length).toBeGreaterThan(0);
+    });
   });
 });
