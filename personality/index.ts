@@ -1,10 +1,25 @@
 export { getVoice, shouldJoke, getVoicePrefix, type VoiceContext, type Situation } from './voice';
+export {
+  createPersonality,
+  loadPersonality,
+  savePersonality,
+  recordInteraction,
+  getContinuityVoice,
+  setPreference,
+  getPreference,
+  transitionMood,
+  getValidTransitions,
+  setMood,
+  type PersonalityConfig,
+  type MoodState,
+  type InteractionRecord,
+  type MoodTransition,
+} from './continuity';
 
 /**
  * Apply voice context to a response
  */
 export function respond(situation: Situation, message: string): string {
-  const { getVoice } = require('./voice');
   const voice = getVoice(situation);
 
   // No humor in serious contexts
@@ -13,7 +28,6 @@ export function respond(situation: Situation, message: string): string {
   }
 
   // Add prefix based on tone
-  const { getVoicePrefix } = require('./voice');
   const prefix = getVoicePrefix(situation);
 
   return prefix + message;

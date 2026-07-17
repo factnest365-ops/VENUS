@@ -26,6 +26,39 @@ export { runAgent, suggestAgent } from './agents/index';
 // Personality
 export { getVoice, shouldJoke, getVoicePrefix } from './personality/voice';
 export { respond, greet, farewell, getJoke } from './personality/index';
+export {
+  createPersonality,
+  loadPersonality,
+  savePersonality,
+  recordInteraction,
+  getContinuityVoice,
+  setPreference,
+  getPreference,
+  transitionMood,
+  setMood,
+} from './personality/continuity';
+
+// Pi Tasks
+export {
+  createTask,
+  shellTask,
+  gitTask,
+  npmTask,
+  readFileTask,
+  writeFileTask,
+  createQueue,
+  enqueue,
+  dequeue,
+  getQueueStats,
+  executeTask,
+  executeTaskSync,
+  processNext,
+  processAll,
+  cancelTask,
+  clearCompleted,
+  findTask,
+  getTasksByStatus,
+} from './pi/tasks';
 
 // CLI
 const command = process.argv[2];
