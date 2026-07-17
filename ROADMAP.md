@@ -108,15 +108,16 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 
 ---
 
-## Phase 9: Revenue Operations 🟡
+## Phase 9: Revenue Operations ✅
 
 **Real money-making**
 
 - [x] `money/intake.ts` — Client intake (Zod validated)
 - [x] `money/scoping.ts` — Project scoping with task templates
 - [x] `money/invoice.ts` — Invoice generation ($150/hr)
-- [ ] Time tracking
-- [ ] Payment processing
+- [x] `money/timetrack.ts` — Time tracking per task
+- [x] `money/payment.ts` — Payment processing (stripe/crypto/manual)
+- [x] `money/pipeline.ts` — Full pipeline: intake → scope → execute → invoice → payment
 
 ---
 
@@ -127,7 +128,7 @@ Turn Pi into a self-improving, money-making, personality-driven agent. Mid model
 - [x] `pi/index.ts` — initVENUS() + getContext()
 - [x] Rules + patterns loaded from markdown on startup
 - [x] Memory DB initialization
-- [ ] CMUX automation
+- [x] CMUX automation (workspace:5 VENUS-Phase9)
 - [ ] Personality continuity across sessions
 - [ ] Real-world task execution
 
