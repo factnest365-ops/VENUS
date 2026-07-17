@@ -1,5 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
 
 interface Agent {
   name: string;
@@ -25,8 +28,9 @@ interface ActiveAgent {
   started_at: number;
 }
 
-const REGISTRY_PATH = path.join(__dirname, "registry.json");
-const ACTIVE_PATH = path.join(__dirname, "active.json");
+const __dirname2 = path.dirname(__filename);
+const REGISTRY_PATH = path.join(__dirname2, "registry.json");
+const ACTIVE_PATH = path.join(__dirname2, "active.json");
 
 function loadRegistry(): Registry {
   return JSON.parse(fs.readFileSync(REGISTRY_PATH, "utf-8"));

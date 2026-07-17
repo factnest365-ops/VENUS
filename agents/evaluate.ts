@@ -1,5 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
 
 interface Agent {
   name: string;
@@ -14,7 +17,8 @@ interface Registry {
   spawn_rules: { min_success_rate: number; max_concurrent: number };
 }
 
-const REGISTRY_PATH = path.join(__dirname, "registry.json");
+const __dirname2 = path.dirname(__filename);
+const REGISTRY_PATH = path.join(__dirname2, "registry.json");
 
 function loadRegistry(): Registry {
   return JSON.parse(fs.readFileSync(REGISTRY_PATH, "utf-8"));

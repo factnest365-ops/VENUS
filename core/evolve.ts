@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
 interface Action {
   type: "create" | "edit" | "delete" | "stop";
@@ -7,8 +8,12 @@ interface Action {
   reason: string;
 }
 
-const CORE = __dirname;
+const __filename = fileURLToPath(import.meta.url);
+const CORE = dirname(__filename);
 const read = (f: string) => readFileSync(join(CORE, f), "utf-8");
+
+let lastAction = "";
+let repeatCount = 0;
 
 export function evolve(): Action {
   const rules = read("rules.md").toLowerCase();
@@ -27,7 +32,19 @@ export function evolve(): Action {
     return { type: "stop", reason: "Last log entry has STOP. Halting." };
   }
 
-  // rule 3: if patterns exist, suggest creating from template
+  // rule 3: detect repetition
+  const currentAction = rules.includes("prune") ? "delete-prune" : "default";
+  if (currentAction === lastAction) {
+    repeatCount++;
+    if (repeatCount > 2) {
+      return { type: "stop", reason: "Same action repeated 3+ times. Halting to prevent loop." };
+    }
+  } else {
+    lastAction = currentAction;
+    repeatCount = 0;
+  }
+
+  // rule 4: if patterns exist, suggest creating from template
   if (patterns.includes("## template")) {
     return {
       type: "create",
@@ -36,8 +53,8 @@ export function evolve(): Action {
     };
   }
 
-  // rule 4: if rules mention "prune", suggest deletion
-  if (rules.includes("prune")) {
+  // rule 5: if rules mention "prune", suggest deletion (but with limits)
+  if (rules.includes("prune") && repeatCount < 2) {
     return {
       type: "delete",
       target: "stale-files",
@@ -45,7 +62,25 @@ export function evolve(): Action {
     };
   }
 
-  // default: edit the last touched thing
+  // rule 6: check log for failures
+  if (log.includes("failure") || log.includes("error")) {
+    return {
+      type: "edit",
+      target: "rules.md",
+      reason: "Failures detected in log. Review rules.",
+    };
+  }
+
+  // rule 7: check for low success rate patterns
+  if (patterns.includes("success_rate: 0")) {
+    return {
+      type: "edit",
+      target: "patterns.md",
+      reason: "Low success patterns found. Refine or remove.",
+    };
+  }
+
+  // default: edit patterns
   return {
     type: "edit",
     target: "patterns.md",
