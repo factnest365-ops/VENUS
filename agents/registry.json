@@ -4,36 +4,36 @@
       "name": "coder",
       "type": "worker",
       "success_rate": 0.85,
-      "tasks_completed": 0,
-      "description": "Writes and implements code based on specifications"
+      "tasks_completed": 5,
+      "description": "Writes code"
     },
     {
       "name": "reviewer",
       "type": "worker",
       "success_rate": 0.92,
-      "tasks_completed": 0,
-      "description": "Reviews code for quality, correctness, and best practices"
+      "tasks_completed": 3,
+      "description": "Reviews code"
     },
     {
       "name": "researcher",
       "type": "worker",
       "success_rate": 0.88,
-      "tasks_completed": 0,
-      "description": "Investigates technical questions and gathers context"
+      "tasks_completed": 2,
+      "description": "Investigates"
     },
     {
       "name": "planner",
       "type": "coordinator",
-      "success_rate": 0.90,
-      "tasks_completed": 0,
-      "description": "Decomposes goals into actionable task sequences"
+      "success_rate": 0.9,
+      "tasks_completed": 4,
+      "description": "Decomposes goals"
     },
     {
       "name": "tester",
       "type": "worker",
       "success_rate": 0.87,
-      "tasks_completed": 0,
-      "description": "Validates implementations via tests and verification"
+      "tasks_completed": 6,
+      "description": "Validates"
     }
   ],
   "spawn_rules": {
