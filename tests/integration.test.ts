@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 import { existsSync, unlinkSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -35,6 +35,11 @@ beforeAll(async () => {
   await initVENUS(TEST_DB);
 });
 
+// Reset before each test that uses agents
+beforeEach(() => {
+  writeFileSync(ACTIVE_PATH, '[]');
+});
+
 afterAll(() => {
   if (existsSync(TEST_DB)) {
     unlinkSync(TEST_DB);
@@ -55,12 +60,14 @@ describe('Full system integration', () => {
   });
 
   it('2) Create agent team — pickBestAgent finds a match', () => {
+    writeFileSync(ACTIVE_PATH, '[]');
     const agent = pickBestAgent('write some code');
     expect(agent).not.toBeNull();
     expect(agent!.name).toBe('coder');
   });
 
   it('3) Execute task via runAgent end-to-end', async () => {
+    writeFileSync(ACTIVE_PATH, '[]');
     const result = await runAgent('implement feature', async (_agent, _task) => {
       return true; // mock success
     });
