@@ -1,3 +1,4 @@
+import { getVoice, shouldJoke, getVoicePrefix, type VoiceContext, type Situation } from './voice';
 export { getVoice, shouldJoke, getVoicePrefix, type VoiceContext, type Situation } from './voice';
 export {
   createPersonality,

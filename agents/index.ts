@@ -2,7 +2,28 @@ import { pickBestAgent, spawnAgent, completeSpawn, type ActiveAgent } from './sp
 import { recordResult, getLeaderboard, type TaskResult } from './evaluate';
 
 export { pickBestAgent, spawnAgent, completeSpawn } from './spawn';
-export { recordResult, getLeaderboard } from './evaluate';
+export { recordResult, recordBatch, getLeaderboard } from './evaluate';
+export type { TaskResult } from './evaluate';
+
+// Auto-spawn (Phase 4)
+export {
+  analyzeComplexity,
+  scoreAgents,
+  isTimedOut,
+  getProgress,
+  createExecutor,
+  autoSpawn,
+  loadRegistry,
+  saveRegistry,
+  loadActive,
+  saveActive,
+  getActiveAgents,
+  suggestAgent as analyzeAgent,
+  type TaskComplexity,
+  type SpawnConfig,
+  type SpawnResult,
+  type AgentScore,
+} from './auto-spawn';
 
 /**
  * Run an agent on a task — full lifecycle
