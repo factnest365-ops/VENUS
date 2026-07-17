@@ -3,8 +3,8 @@
     {
       "name": "coder",
       "type": "worker",
-      "success_rate": 0.85,
-      "tasks_completed": 5,
+      "success_rate": 0.938,
+      "tasks_completed": 9,
       "description": "Writes code"
     },
     {
