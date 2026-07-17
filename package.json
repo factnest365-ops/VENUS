@@ -1,0 +1,20 @@
+{
+  "name": "venus",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Self-improving AI agent system",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc",
+    "dev": "vitest watch"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "vitest": "^1.6.0"
+  }
+}

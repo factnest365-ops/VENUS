@@ -1,0 +1,43 @@
+{
+  "agents": [
+    {
+      "name": "coder",
+      "type": "worker",
+      "success_rate": 0.85,
+      "tasks_completed": 0,
+      "description": "Writes and implements code based on specifications"
+    },
+    {
+      "name": "reviewer",
+      "type": "worker",
+      "success_rate": 0.92,
+      "tasks_completed": 0,
+      "description": "Reviews code for quality, correctness, and best practices"
+    },
+    {
+      "name": "researcher",
+      "type": "worker",
+      "success_rate": 0.88,
+      "tasks_completed": 0,
+      "description": "Investigates technical questions and gathers context"
+    },
+    {
+      "name": "planner",
+      "type": "coordinator",
+      "success_rate": 0.90,
+      "tasks_completed": 0,
+      "description": "Decomposes goals into actionable task sequences"
+    },
+    {
+      "name": "tester",
+      "type": "worker",
+      "success_rate": 0.87,
+      "tasks_completed": 0,
+      "description": "Validates implementations via tests and verification"
+    }
+  ],
+  "spawn_rules": {
+    "min_success_rate": 0.7,
+    "max_concurrent": 5
+  }
+}
