@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "venus": "./venus-chat.ts",
+    "venus": "./venus-ui/index.tsx",
+    "venus-chat": "./venus-chat.ts",
     "venus-cli": "./index.ts"
   },
   "description": "Self-improving AI agent system",
@@ -13,10 +14,13 @@
     "dev": "vitest watch"
   },
   "dependencies": {
+    "@inkjs/ui": "^2.0.0",
     "boxen": "^8.0.1",
     "chalk": "^5.6.2",
     "gradient-string": "^3.0.0",
+    "ink": "^7.1.1",
     "ora": "^9.4.1",
+    "react": "^19.2.7",
     "sql.js": "^1.14.1",
     "zod": "^3.23.0"
   },
