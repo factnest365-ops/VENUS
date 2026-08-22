@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "venus": "./venus-ui/index.tsx",
-    "venus-chat": "./venus-chat.ts",
+    "venus": "./venus.sh",
+    "venus-tui": "./venus-ui/index.tsx",
     "venus-cli": "./index.ts"
   },
   "description": "Self-improving AI agent system",
